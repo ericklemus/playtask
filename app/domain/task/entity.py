@@ -1,3 +1,4 @@
+import datetime as dt
 from enum import Enum
 from uuid import UUID
 
@@ -13,7 +14,11 @@ class Priority(str, Enum):
 
 
 class Task(BaseModel):
-    uuid: UUID
     name: str
     status: bool
     priority: Priority
+
+
+class TaskCreate(Task):
+    uuid: UUID
+    created_at: dt.datetime

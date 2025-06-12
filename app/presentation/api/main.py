@@ -1,12 +1,13 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
+from fastapi.exceptions import HTTPException, RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
-from sqlalchemy import select
-from sqlalchemy.orm import Session
 
-from app.infrastructure.database.postgres.base import SessionLocal
-from app.schemas import Task as TaskSchema
-from app.schemas import TaskCreate as TaskCreateSchema
-from app.infrastructure.database.models.base import Task as TaskModel
+from app.presentation.api.commons.exception_handlers import (
+    generic_exception_handler,
+    not_found_exception_handler,
+    validation_error_exception_handler,
+)
+from app.presentation.api.resources.task.routes import task_router
 
 
 def init_app() -> FastAPI:
@@ -21,37 +22,19 @@ def init_app() -> FastAPI:
         allow_headers=["*"],
     )
 
+    common_router_args = {}
+
+    app.include_router(task_router, **common_router_args)
+
+    app.add_exception_handler(Exception, handler=generic_exception_handler)
+    app.add_exception_handler(HTTPException, handler=not_found_exception_handler)
+    app.add_exception_handler(RequestValidationError, handler=validation_error_exception_handler)
+
     return app
 
 
 app = init_app()
 
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
 @app.get("/")
 def hello_world():
     return {"Hello": "Erick"}
-
-
-@app.get("/tasks")
-async def get_tasks(db: Session = Depends(get_db)) -> list[TaskSchema]:
-    return db.execute(select(TaskModel)).scalars().all()
-
-
-@app.post("/tasks")
-async def create_tasks(
-    data: TaskCreateSchema, db: Session = Depends(get_db)
-) -> TaskSchema:
-    task = TaskModel(**data.model_dump())
-    db.add(task)
-    db.commit()
-    db.refresh(task)
-
-    return task
