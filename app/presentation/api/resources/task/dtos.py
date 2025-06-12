@@ -10,6 +10,7 @@ class TaskBasePayload(BaseModel):
     name: str
     completed: bool
     priority: str
+    tasklist_id: UUID
 
 
 class TaskBaseResponse(TaskBasePayload):
