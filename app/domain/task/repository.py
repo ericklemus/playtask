@@ -9,7 +9,7 @@ class Task(ABC):
     @abstractmethod
     async def all(self, filters: dict) -> list[TaskModel]:
         pass
-    
+
     @abstractmethod
     async def get(self, uuid: UUID) -> TaskModel:
         pass

@@ -1,0 +1,16 @@
+# pyproject.toml
+[tool.black]
+line-length = 88
+target-version = ['py39']  # Cambia a tu versión real
+exclude = '''
+/(
+    \.git
+  | \.mypy_cache
+  | \.venv
+  | venv
+  | env
+  | build
+  | dist
+  | alembic/versions
+)/
+'''

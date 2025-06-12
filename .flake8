@@ -1,0 +1,13 @@
+# .flake8
+[flake8]
+max-line-length = 88
+exclude =
+    .git,
+    __pycache__,
+    alembic/versions,
+    venv,
+    env,
+    .venv,
+    migrations
+per-file-ignores =
+    __init__.py: F401

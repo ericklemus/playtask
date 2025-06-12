@@ -1,8 +1,8 @@
-import datetime as dt
 from enum import Enum
 from uuid import UUID
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+
 
 class Priority(str, Enum):
     lowest = "lowest"
@@ -10,6 +10,7 @@ class Priority(str, Enum):
     medium = "medium"
     high = "high"
     highest = "highest"
+
 
 class Task(BaseModel):
     uuid: UUID
