@@ -6,14 +6,27 @@ from sqlalchemy.orm import Session
 
 from app.infrastructure.database.models.base import TaskList as TaskListModel
 from app.infrastructure.database.postgres.base import get_db
-from app.presentation.api.resources.list.dtos import TaskListGetResponse as TaskListGetResponseDTO
-from app.presentation.api.resources.list.dtos import TaskListCreatePayload as TaskListCreatePayloadDTO
-from app.presentation.api.resources.list.dtos import TaskListCreateResponse as TaskListCreateResponseDTO
-from app.presentation.api.resources.list.dtos import TaskListUpdatePayload as TaskListUpdatePayloadDTO
-from app.presentation.api.resources.list.dtos import TaskListUpdateResponse as TaskListUpdateResponseDTO
-from app.presentation.api.resources.list.dtos import TaskListDeleteResponse as TaskListDeleteResponseDTO
+from app.presentation.api.resources.list.dtos import (
+    TaskListGetResponse as TaskListGetResponseDTO,
+)
+from app.presentation.api.resources.list.dtos import (
+    TaskListCreatePayload as TaskListCreatePayloadDTO,
+)
+from app.presentation.api.resources.list.dtos import (
+    TaskListCreateResponse as TaskListCreateResponseDTO,
+)
+from app.presentation.api.resources.list.dtos import (
+    TaskListUpdatePayload as TaskListUpdatePayloadDTO,
+)
+from app.presentation.api.resources.list.dtos import (
+    TaskListUpdateResponse as TaskListUpdateResponseDTO,
+)
+from app.presentation.api.resources.list.dtos import (
+    TaskListDeleteResponse as TaskListDeleteResponseDTO,
+)
 
 tasklist_router = APIRouter(prefix="", tags=["lists"])
+
 
 @tasklist_router.get(
     "/tasklist",
@@ -23,14 +36,14 @@ tasklist_router = APIRouter(prefix="", tags=["lists"])
 async def tasklist_all(db: Session = Depends(get_db)) -> list[TaskListGetResponseDTO]:
     return db.execute(select(TaskListModel)).scalars().all()
 
+
 @tasklist_router.get(
     "/tasklist/{uuid}",
     response_model=TaskListGetResponseDTO,
     status_code=status.HTTP_200_OK,
 )
 async def tasklist_get(
-    uuid: UUID,
-    db: Session = Depends(get_db)
+    uuid: UUID, db: Session = Depends(get_db)
 ) -> TaskListGetResponseDTO:
     tasklist = db.execute(
         select(TaskListModel).where(TaskListModel.uuid == uuid)
@@ -40,6 +53,7 @@ async def tasklist_get(
         raise HTTPException(status_code=404, detail="TaskList not found")
 
     return tasklist
+
 
 @tasklist_router.post(
     "/tasklist",
@@ -55,6 +69,7 @@ async def tasklist_create(
     db.refresh(tasklist)
 
     return tasklist
+
 
 @tasklist_router.put(
     "/tasklist/{uuid}",
@@ -75,12 +90,13 @@ async def tasklist_update(
 
     for key, value in data.model_dump(exclude_unset=True).items():
         setattr(tasklist, key, value)
-    
+
     db.add(tasklist)
     db.commit()
     db.refresh(tasklist)
 
     return tasklist
+
 
 @tasklist_router.delete(
     "/tasklist/{uuid}",

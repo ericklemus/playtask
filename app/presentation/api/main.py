@@ -30,12 +30,15 @@ def init_app() -> FastAPI:
 
     app.add_exception_handler(Exception, handler=generic_exception_handler)
     app.add_exception_handler(HTTPException, handler=not_found_exception_handler)
-    app.add_exception_handler(RequestValidationError, handler=validation_error_exception_handler)
+    app.add_exception_handler(
+        RequestValidationError, handler=validation_error_exception_handler
+    )
 
     return app
 
 
 app = init_app()
+
 
 @app.get("/")
 def hello_world():

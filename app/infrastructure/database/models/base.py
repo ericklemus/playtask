@@ -9,8 +9,7 @@ class Base(DeclarativeBase):
     uuid: Mapped[UUID] = mapped_column(primary_key=True, index=True, default=uuid4)
     created_at: Mapped[dt.datetime] = mapped_column(default=dt.datetime.now)
     updated_at: Mapped[dt.datetime] = mapped_column(
-        default=dt.datetime.now,
-        onupdate=dt.datetime.now
+        default=dt.datetime.now, onupdate=dt.datetime.now
     )
 
 
