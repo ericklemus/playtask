@@ -4,6 +4,7 @@ x-environment: &default-environment
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: mydb
+  DATABASE_URL: postgresql://postgres:postgres@db:5432/mydb
 
 services:
   db:
@@ -17,7 +18,9 @@ services:
 
   web:
     build: .
-    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    command: uvicorn app.presentation.api.main:app --host 0.0.0.0 --port 8000 --reload
+    environment:
+      << : [*default-environment]
     volumes:
       - .:/code
     ports:
