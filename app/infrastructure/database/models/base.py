@@ -25,6 +25,7 @@ class Task(Base):
 
     name: Mapped[str] = mapped_column(nullable=False)
     completed: Mapped[bool] = mapped_column(default=False)
+    priority: Mapped[str] = mapped_column(default="medium")
     tasklist_id: Mapped[UUID] = mapped_column(
         ForeignKey("tasklists.uuid"), nullable=False
     )

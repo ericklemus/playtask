@@ -8,6 +8,7 @@ from app.presentation.api.commons.exception_handlers import (
     validation_error_exception_handler,
 )
 from app.presentation.api.resources.task.routes import task_router
+from app.presentation.api.resources.list.routes import tasklist_router
 
 
 def init_app() -> FastAPI:
@@ -25,6 +26,7 @@ def init_app() -> FastAPI:
     common_router_args = {}
 
     app.include_router(task_router, **common_router_args)
+    app.include_router(tasklist_router, **common_router_args)
 
     app.add_exception_handler(Exception, handler=generic_exception_handler)
     app.add_exception_handler(HTTPException, handler=not_found_exception_handler)
