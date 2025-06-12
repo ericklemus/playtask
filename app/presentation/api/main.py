@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database import SessionLocal
+from app.infrastructure.database.postgres.base import SessionLocal
 from app.schemas import Task as TaskSchema
 from app.schemas import TaskCreate as TaskCreateSchema
 from app.infrastructure.database.models.base import Task as TaskModel
