@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
-from app.models import Task as TaskModel
+from app.infrastructure.database.models.base import Task as TaskModel
 
 
 class Task(ABC):

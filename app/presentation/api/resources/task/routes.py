@@ -38,11 +38,7 @@ async def task_all(
     if completed is not None:
         query = query.where(TaskModel.completed == completed)
 
-    tasks = (
-        db.execute(query)
-        .scalars()
-        .all()
-    )
+    tasks = db.execute(query).scalars().all()
 
     total = len(tasks)
     completed_percentage = (
