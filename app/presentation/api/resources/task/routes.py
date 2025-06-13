@@ -1,4 +1,5 @@
 from uuid import UUID
+from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
@@ -27,10 +28,18 @@ task_router = APIRouter(prefix="", tags=["tasks"])
 )
 async def task_all(
     tasklist_id: UUID,
+    priority: Optional[str] = None,
+    completed: Optional[bool] = None,
     db: Session = Depends(get_db),
 ) -> TaskAllResponseDTO:
+    query = select(TaskModel).where(TaskModel.tasklist_id == tasklist_id)
+    if priority is not None:
+        query = query.where(TaskModel.priority == priority)
+    if completed is not None:
+        query = query.where(TaskModel.completed == completed)
+
     tasks = (
-        db.execute(select(TaskModel).where(TaskModel.tasklist_id == tasklist_id))
+        db.execute(query)
         .scalars()
         .all()
     )
