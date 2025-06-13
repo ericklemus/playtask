@@ -8,20 +8,10 @@ from app.infrastructure.database.models.base import TaskList as TaskListModel
 from app.infrastructure.database.postgres.base import get_db
 from app.presentation.api.resources.list.dtos import (
     TaskListGetResponse as TaskListGetResponseDTO,
-)
-from app.presentation.api.resources.list.dtos import (
     TaskListCreatePayload as TaskListCreatePayloadDTO,
-)
-from app.presentation.api.resources.list.dtos import (
     TaskListCreateResponse as TaskListCreateResponseDTO,
-)
-from app.presentation.api.resources.list.dtos import (
     TaskListUpdatePayload as TaskListUpdatePayloadDTO,
-)
-from app.presentation.api.resources.list.dtos import (
     TaskListUpdateResponse as TaskListUpdateResponseDTO,
-)
-from app.presentation.api.resources.list.dtos import (
     TaskListDeleteResponse as TaskListDeleteResponseDTO,
 )
 

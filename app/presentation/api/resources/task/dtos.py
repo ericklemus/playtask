@@ -10,7 +10,6 @@ class TaskBasePayload(BaseModel):
     name: str
     completed: bool
     priority: str
-    tasklist_id: UUID
 
 
 class TaskBaseResponse(TaskBasePayload):
@@ -20,7 +19,25 @@ class TaskBaseResponse(TaskBasePayload):
     updated_at: dt.datetime
 
 
+class TaskAllBaseResponse(BaseModel):
+
+    name: str
+    completed: bool
+    priority: str
+    uuid: UUID
+    created_at: dt.datetime
+    updated_at: dt.datetime
+
+    class Config:
+        from_attributes = True
+
+
 # Get
+class TaskAllResponse(BaseModel):
+    tasks: list[TaskAllBaseResponse]
+    completed_percentage: float
+
+
 class TaskGetResponse(TaskBaseResponse):
     pass
 
