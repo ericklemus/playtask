@@ -19,7 +19,7 @@ class TaskListAll(TaskListAllUsecase):
         self.repository = repository
 
     async def execute(self) -> TaskListEntity:
-        self.repository.all()
+        return self.repository.all()
 
 
 class TaskListGet(TaskListGetUsecase):
