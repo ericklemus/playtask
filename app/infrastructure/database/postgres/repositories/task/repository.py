@@ -14,27 +14,27 @@ class Task(BaseRepository, TaskRepository):
             filters=filters,
         )
 
-    async def get(self, uuid: UUID) -> dict:
+    async def get(self, tasklist_id: UUID, task_id: UUID) -> dict:
         return await self._get(
             model=TaskModel,
-            filters={"uuid": uuid},
+            filters={"tasklist_id": tasklist_id, "uuid": task_id},
         )
 
-    async def create(self, data: dict) -> dict:
-        return await self._get(
+    async def create(self, tasklist_id: UUID, data: dict) -> dict:
+        return await self._create(
             model=TaskModel,
-            data=data,
+            data={"tasklist_id": tasklist_id, **data},
         )
 
-    async def update(self, uuid: UUID, data: dict) -> dict:
+    async def update(self, tasklist_id: UUID, task_id: UUID, data: dict) -> dict:
         return await self._update(
             model=TaskModel,
             data=data,
-            filters={"uuid": uuid},
+            filters={"tasklist_id": tasklist_id, "uuid": task_id},
         )
 
-    async def delete(self, uuid: UUID) -> None:
+    async def delete(self, tasklist_id: UUID, task_id: UUID) -> None:
         return await self._delete(
             model=TaskModel,
-            filters={"uuid": uuid},
+            filters={"tasklist_id": tasklist_id, "uuid": task_id},
         )

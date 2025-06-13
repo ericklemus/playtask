@@ -11,17 +11,17 @@ class Task(ABC):
         pass
 
     @abstractmethod
-    async def get(self, uuid: UUID) -> TaskModel:
+    async def get(self, tasklist_id: UUID, task_id: UUID) -> TaskModel:
         pass
 
     @abstractmethod
-    async def create(self, task_data: dict) -> TaskModel:
+    async def create(self, tasklist_id: UUID, data: dict) -> TaskModel:
         pass
 
     @abstractmethod
-    async def update(self, uuid: UUID, task_data: dict) -> TaskModel:
+    async def update(self, tasklist_id: UUID, task_id: UUID, data: dict) -> TaskModel:
         pass
 
     @abstractmethod
-    async def delete(self, uuid: UUID) -> None:
+    async def delete(self, tasklist_id: UUID, task_id: UUID) -> None:
         pass

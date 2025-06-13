@@ -4,11 +4,11 @@ from uuid import UUID
 from pydantic import BaseModel
 
 
-class TaskList(BaseModel):
+class TaskListCreate(BaseModel):
     name: str
 
 
-class TaskListCreate(TaskList):
+class TaskList(TaskListCreate):
     uuid: UUID
     created_at: dt.datetime
     updated_at: dt.datetime

@@ -1,6 +1,7 @@
 import datetime as dt
 from enum import Enum
 from uuid import UUID
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -13,12 +14,18 @@ class Priority(str, Enum):
     highest = "highest"
 
 
-class Task(BaseModel):
+class TaskFilter(BaseModel):
+    tasklist_id: UUID
+    priority: Optional[Priority]
+    completed: Optional[bool]
+
+
+class TaskCreate(BaseModel):
     name: str
     status: bool
     priority: Priority
 
 
-class TaskCreate(Task):
+class Task(TaskCreate):
     uuid: UUID
     created_at: dt.datetime
